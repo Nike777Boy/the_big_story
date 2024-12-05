@@ -1,0 +1,469 @@
+.game-container {
+    width: 100%;
+    height: 100vh;
+    max-width: 1200px;
+    position: relative;
+    margin: 0 auto;
+    border: 2px solid #333;
+    overflow: hidden;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.background {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-size: cover;
+    background-position: center 55%;
+    background-repeat: no-repeat;
+    object-fit: cover;
+    transition: background-image 0.5s ease-in-out;
+    background-color: #ffb6c1;
+}
+
+.background::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    pointer-events: none;
+}
+
+.characters {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.dialog-box {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 15px;
+    color: white;
+    border-radius: 10px;
+    font-size: 0.9em;
+}
+
+.character-name {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Добавляем стили я персонажей */
+.character {
+    position: absolute;
+    width: 200px;
+    height: 300px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    transition: all 0.5s ease;
+    transform-origin: bottom center;
+    bottom: 0;
+}
+
+.arslan {
+    background-image: url('images/arslan.png');
+}
+
+.darika {
+    background-image: url('images/darika.png');
+}
+
+.dagdag {
+    background-image: url('images/dagdag.png');
+}
+
+.dagika {
+    background-image: url('images/dagika.png');
+}
+
+.dadarik {
+    background-image: url('images/dadarik.png');
+}
+
+/* Дбавляем стили для сердечек */
+.heart {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+    --rotation: 45deg;
+    --tx: 20px;
+}
+
+.heart::before,
+.heart::after {
+    content: '';
+    position: absolute;
+    width: 50%;
+    height: 80%;
+    border-radius: 50px 50px 0 0;
+    background-color: rgba(255, 82, 121, 0.8);
+    transform: rotate(-45deg);
+    transform-origin: 100% 100%;
+}
+
+.heart::after {
+    transform: rotate(45deg);
+    transform-origin: 0 100%;
+}
+
+/* Анимации */
+.fadeIn {
+    animation: fadeIn 1s ease-in;
+}
+
+.bounce {
+    animation: bounce 1s ease-in-out infinite;
+}
+
+.heartBeat {
+    animation: heartBeat 1.5s ease-in-out infinite;
+}
+
+.romantic {
+    animation: romantic 3s ease-in-out infinite;
+}
+
+.familyGather {
+    animation: gather 1s ease-out;
+}
+
+/* Обновляем анимацию для сердечек */
+@keyframes floatingHeart {
+    0% {
+        transform: scale(0) rotate(0deg);
+        opacity: 0;
+    }
+    20% {
+        transform: scale(1) rotate(var(--rotation, 45deg));
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0.5) translate(var(--tx, 20px), -100px) rotate(var(--rotation, 45deg));
+        opacity: 0;
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+@keyframes heartBeat {
+    0% { transform: scale(1); }
+    14% { transform: scale(1.1); }
+    28% { transform: scale(1); }
+    42% { transform: scale(1.1); }
+    70% { transform: scale(1); }
+}
+
+@keyframes romantic {
+    0% { filter: brightness(1); }
+    50% { filter: brightness(1.2) sepia(0.3); }
+    100% { filter: brightness(1); }
+}
+
+@keyframes gather {
+    from { transform: translateX(-100px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+/* Добавляем стили для романтичного фона */
+.romantic-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+    opacity: 0.3;
+    z-index: 1;
+}
+
+/* Стили для фоновых сердечек */
+.background-heart {
+    position: fixed;
+    width: 30px;
+    height: 30px;
+    pointer-events: none;
+    opacity: 0.2;
+    z-index: 9999;
+}
+
+.background-heart::before,
+.background-heart::after {
+    content: '';
+    position: absolute;
+    width: 50%;
+    height: 80%;
+    border-radius: 50px 50px 0 0;
+    background-color: #ff6b95;
+    transform: rotate(-45deg);
+    transform-origin: 100% 100%;
+}
+
+.background-heart::after {
+    transform: rotate(45deg);
+    transform-origin: 0 100%;
+}
+
+/* Анимация для фоновых сердечек */
+@keyframes floatingBackgroundHeart {
+    0% {
+        transform: translateY(100vh) scale(0.3) rotate(0deg);
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.2;
+        transform: translateY(50vh) scale(0.6) rotate(180deg);
+    }
+    100% {
+        transform: translateY(-100px) scale(1) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Добавляем блики */
+@keyframes sparkle {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+}
+
+.sparkle {
+    position: fixed;
+    width: 4px;
+    height: 4px;
+    background: white;
+    border-radius: 50%;
+    animation: sparkle 2s ease-in-out infinite;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+/* Добавляем стили для глобального фона */
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+    background-size: 400% 400%;
+    animation: gradientAnimation 15s ease infinite;
+}
+
+.global-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+/* Добавляем анимацию для фона */
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Удаляем стили стола */
+.table,
+.table::before,
+.table::after {
+    display: none;
+}
+
+/* Обновляем специфичные настройки для разных фонов */
+[style*="kabinet1geeks.jpg"] {
+    background-position: center 60%;
+}
+
+[style*="kabinet2geeks.jpg"] {
+    background-position: center 60%;
+}
+
+[style*="kuhnyageeks.jpg"] {
+    background-position: center 55%;
+}
+
+[style*="parkgeeks.jpg"] {
+    background-position: center 50%;
+}
+
+[style*="domgeeks.jpg"] {
+    background-position: center 55%;
+}
+
+[style*="kaworkingGeeks.jpg"] {
+    background-position: center 50%;
+}
+
+/* Обновляем анимацию ружения */
+@keyframes spinAround {
+    0% {
+        transform: rotate(0deg) translateX(120px) translateY(-20px) scale(0.8);
+    }
+    100% {
+        transform: rotate(360deg) translateX(120px) translateY(-20px) scale(0.8);
+    }
+}
+
+/* Обновляем стили для перснажей во время кружения */
+.character.spinning {
+    position: absolute;
+    top: 50% !important;
+    left: 50% !important;
+    width: 150px;
+    height: 225px;
+    transform-origin: 0 0; /* Точка вращения в центре экрана */
+    margin-left: -75px; /* Половина ширины персонажа */
+    margin-top: -112.5px; /* Половина высоты персонажа */
+}
+
+/* Обновляем стили для большого сердца */
+.big-heart {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3; /* Увеличиваем z-index чтобы сердце было поверх персонажей */
+    opacity: 0;
+    animation: appearHeart 1s ease-in forwards, glowHeart 2s ease-in-out infinite;
+}
+
+/* Добавляем свечение для сердца */
+@keyframes glowHeart {
+    0%, 100% { filter: drop-shadow(0 0 5px rgba(255, 82, 121, 0.8)); }
+    50% { filter: drop-shadow(0 0 15px rgba(255, 82, 121, 0.8)); }
+}
+
+@keyframes appearHeart {
+    from { 
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0);
+    }
+    to { 
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* Обновляем стили для детей */
+.dagdag,
+.dagika {
+    width: 120px;
+    height: 180px;
+    bottom: 50px;
+}
+
+/* Корректируем позиционирование для семейной сцены */
+.character.child-appear {
+    transform-origin: bottom center;
+}
+
+/* Обновляем позиционирование для семейной сцены */
+.character.arslan.child-appear {
+    width: 180px;
+    height: 280px;
+    bottom: 30px;
+}
+
+.character.darika.child-appear {
+    width: 180px;
+    height: 280px;
+    bottom: 30px;
+}
+
+/* Обновляем анимацию появления детей */
+@keyframes childAppear {
+    from {
+        opacity: 0;
+        transform: translateY(50px) scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Добавляем стиль для центрального теста */
+.center-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    font-size: 24px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    width: 80%;
+}
+
+/* Стиль для текста рассказчика */
+.narrator-text {
+    font-style: italic;
+    line-height: 1.5;
+}
+
+/* Стили для тюремной решетки */
+.prison-bars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 20px,
+        #333 20px,
+        #333 25px
+    );
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+}
+
+.prison-bars::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        180deg,
+        transparent,
+        transparent 100px,
+        #333 100px,
+        #333 105px
+    );
+}
+
+/* Фильтр для тюремной сцены */
+.filter-prison {
+    filter: brightness(0.5) contrast(1.2) grayscale(0.8);
+}
+  
